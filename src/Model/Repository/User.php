@@ -108,7 +108,7 @@ class User
         }
 
         $productFilter = function (array $dataSource) use ($search): bool {
-            return (bool) array_intersect($dataSource, $search);
+            return (bool) array_intersect_assoc($dataSource, $search);
         };
 
         return array_filter($dataSource, $productFilter);
