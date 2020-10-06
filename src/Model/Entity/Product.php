@@ -22,9 +22,15 @@ class Product
     private $price;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * @param int $id
      * @param string $name
      * @param float $price
+     * @param float $description
      */
     public function __construct(int $id, string $name, float $price, string $description)
     {

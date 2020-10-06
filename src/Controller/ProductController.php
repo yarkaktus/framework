@@ -56,6 +56,13 @@ class ProductController
         return $this->render('product/list.html.php', ['productList' => $productList]);
     }
 
+    public function listInfoAction(Request $request): Response
+    {
+        $productList = (new Product())->getAll($request->query->get('sort', ''));
+
+        return $this->render('product/list_info.html.php', ['productList' => $productList]);
+    }
+
     /**
      * Публикация сообщения в соц.сети
      *

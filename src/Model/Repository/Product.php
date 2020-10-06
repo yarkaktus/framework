@@ -22,7 +22,7 @@ class Product
 
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price']);
+            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price'], $item['description']);
         }
 
         return $productList;
