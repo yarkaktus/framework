@@ -1,0 +1,13 @@
+version: "3.5"
+
+
+services:
+  web:
+    image: composer:1.9.3
+    container_name: php-framework
+    working_dir: /app
+    volumes:
+    - ./:/app
+    ports:
+      - "8080:8080"
+    command: bash -c "composer install && composer on"
