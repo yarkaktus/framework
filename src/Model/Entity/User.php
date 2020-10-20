@@ -86,4 +86,18 @@ class User
     {
         return $this->role;
     }
+
+    /**
+     * @return bool
+     */
+    public function isSuperUser(): bool
+    {
+        $role = $this->role;
+
+        if ($role->getType() == 'admin') {
+            return true;
+        }
+        return false;
+
+    }
 }

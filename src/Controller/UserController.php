@@ -65,12 +65,8 @@ class UserController
         $user_session = new Security($request->getSession());
         $user = $user_session->getUser();
 
-        if (is_null($user)){
+        if (is_null($user) or !$user->isSuperUser()){
             return  $this->render('error404.html.php');
-        }
-        $user_role = $user_session->getUser()->getRole();
-        if ($user_role->getType() != 'admin'){
-            return $this->render('error404.html.php');
         }
 
         $userList = (new User())->getAll();
