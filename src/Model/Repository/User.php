@@ -55,7 +55,8 @@ class User
             $user['name'],
             $user['login'],
             $user['password'],
-            new Entity\Role($role['id'], $role['title'], $role['role'])
+            new Entity\Role($role['id'], $role['title'], $role['role']
+            )
         );
     }
 
@@ -119,5 +120,28 @@ class User
         };
 
         return array_filter($dataSource, $productFilter);
+    }
+
+    /**
+     * Получаем всех пользователй
+     *
+     * @return Entity\User[]
+     */
+    public function fetchAll(): array
+    {
+        $userList = [];
+        foreach ($this->getDataFromSource() as $item) {
+            $role = $item['role'];
+
+            $userList[] = new Entity\User(
+                $item['id'],
+                $item['name'],
+                $item['login'],
+                $item['password'],
+                new Entity\Role($role['id'], $role['title'], $role['role'])
+            );
+        }
+
+        return $userList;
     }
 }
