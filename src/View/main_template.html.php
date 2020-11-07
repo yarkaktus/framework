@@ -32,6 +32,7 @@
                                 <?php
 } else {
         ?>
+                                    <tr><td><a href="<?= $path('user_profile') ?>">Мой профиль</a></td></tr>
                                     <tr><td><a href="<?= $path('logout') ?>">Выход</a></td></tr>
                                 <?php
     } ?>

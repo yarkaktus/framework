@@ -72,4 +72,21 @@ class UserController
         $userList = (new User())->getAll();
         return  $this->render('user/list.html.php', ['userList' => $userList]);
     }
+
+    /**
+     * Страница профиля авторизованного пользователя
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function userProfile(Request $request): Response
+    {
+        $user_session = new Security($request->getSession());
+        $user = $user_session->getUser();
+
+        if (is_null($user)){
+            return  $this->render('error404.html.php');
+        }
+        return  $this->render('user/profile.html.php', ['user' => $user]);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Model\Entity;
 
@@ -24,6 +24,11 @@ class User
     /**
      * @var string
      */
+    private $birthday;
+
+    /**
+     * @var string
+     */
     private $passwordHash;
 
     /**
@@ -36,13 +41,15 @@ class User
      * @param string $name
      * @param string $login
      * @param string $password
+     * @param string $birthday
      * @param Role $role
      */
-    public function __construct(int $id, string $name, string $login, string $password, Role $role)
+    public function __construct(int $id, string $name, string $login, string $birthday, string $password, Role $role)
     {
         $this->id = $id;
         $this->name = $name;
         $this->login = $login;
+        $this->birthday = $birthday;
         $this->passwordHash = $password;
         $this->role = $role;
     }
@@ -69,6 +76,13 @@ class User
     public function getLogin(): string
     {
         return $this->login;
+    }
+    /**
+     * @return string
+     */
+    public function getBirthday(): string
+    {
+        return $this->birthday;
     }
 
     /**
