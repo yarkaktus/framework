@@ -21,6 +21,7 @@ class Basket
      * Сессионный ключ списка всех продуктов корзины
      */
     private const BASKET_DATA_KEY = 'basket';
+    private const PREVIOUS_BASKET_SUM_KEY = 'previous_basket_sum';
 
     /**
      * @var SessionInterface
@@ -75,6 +76,27 @@ class Basket
     }
 
     /**
+     * Получаем информацию по текущей цене
+     *
+     * @return float
+     */
+    public function getTotalSum(): float
+    {
+        $products = $this->getProductsInfo();
+        $totalSum = 0;
+        foreach ($products as $product){
+            $totalSum += $product->getPrice();
+        }
+        return $totalSum;
+    }
+
+    public function getPreviousTotalSum(): float
+    {
+        $previousSum = $this->session->get(static::PREVIOUS_BASKET_SUM_KEY, 0);
+        return $previousSum;
+    }
+
+    /**
      * Оформление заказа
      *
      * @return void
@@ -119,6 +141,8 @@ class Basket
         $totalPrice = $totalPrice - $totalPrice / 100 * $discount;
 
         $billing->pay($totalPrice);
+        $this->session->set(static::PREVIOUS_BASKET_SUM_KEY, $totalPrice);
+
 
         $user = $security->getUser();
         $communication->process($user, 'checkout_template');
