@@ -111,7 +111,7 @@ class User
                 'id' => 5,
                 'name' => 'Student Studentovich',
                 'login' => 'student',
-                'birthday' => '23.11.2000',
+                'birthday' => '16.11.2000',
                 'password' => '$2y$10$vQvuFc6vQQyon0IawbmUN.3cPBXmuaZYsVww5csFRLvLCLPTiYwMa', // testss
                 'role' => $user
             ],

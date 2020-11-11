@@ -9,6 +9,9 @@ use Service\Billing\Card;
 use Service\Billing\IBilling;
 use Service\Communication\Email;
 use Service\Communication\ICommunication;
+use Service\Discount\BirthdayDiscount;
+use Service\Discount\BigSumDiscount;
+use Service\Discount\DelphiDiscount;
 use Service\Discount\IDiscount;
 use Service\Discount\NullObject;
 use Service\User\ISecurity;
@@ -80,7 +83,7 @@ class Basket
      *
      * @return float
      */
-    public function getTotalSum(): float
+    public function getTotalProductSum(): float
     {
         $products = $this->getProductsInfo();
         $totalSum = 0;
@@ -90,10 +93,41 @@ class Basket
         return $totalSum;
     }
 
+    public function getTotalSumWithDiscount(): float
+    {
+        $totalSum = $this->getTotalProductSum();
+        $discount = $this -> getBestDiscount();
+
+        $totalSum = $totalSum - $totalSum / 100 * $discount->getDiscount();
+
+        return $totalSum;
+    }
+
     public function getPreviousTotalSum(): float
     {
         $previousSum = $this->session->get(static::PREVIOUS_BASKET_SUM_KEY, 0);
         return $previousSum;
+    }
+
+    public function getBestDiscount(): IDiscount
+    {
+        $security = new Security($this->session);
+        $user = $security->getUser();
+
+        $bestDiscount = new NullObject();
+        $maxDiscountValue = 0;
+
+        $discounts = [DelphiDiscount::class, BirthdayDiscount::class, BigSumDiscount::class];
+        foreach ($discounts as $discount){
+            $currentDiscount = new $discount($user, $this);
+            $currentDiscountValue = $currentDiscount->getDiscount();
+
+            if ($currentDiscountValue > $maxDiscountValue ){
+                $bestDiscount = $currentDiscount;
+            }
+        }
+
+        return $bestDiscount;
     }
 
     /**
@@ -107,7 +141,7 @@ class Basket
         $billing = new Card();
 
         // Здесь должна быть некоторая логика получения информации о скидки пользователя
-        $discount = new NullObject();
+        $discount = $this -> getBestDiscount();
 
         // Здесь должна быть некоторая логика получения способа уведомления пользователя о покупке
         $communication = new Email();

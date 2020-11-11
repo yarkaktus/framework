@@ -25,11 +25,19 @@ class OrderController
         if ($request->isMethod(Request::METHOD_POST)) {
             return $this->redirect('order_checkout');
         }
+        $basket = new Basket($request->getSession());
 
-        $productList = (new Basket($request->getSession()))->getProductsInfo();
+        $productList = $basket->getProductsInfo();
+        $discount = $basket->getBestDiscount();
         $isLogged = (new Security($request->getSession()))->isLogged();
 
-        return $this->render('order/info.html.php', ['productList' => $productList, 'isLogged' => $isLogged]);
+        return $this->render('order/info.html.php', [
+                'productList' => $productList,
+                'basket' => $basket,
+                'isLogged' => $isLogged,
+                'discount' => $discount,
+            ]
+        );
     }
 
     /**

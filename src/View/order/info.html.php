@@ -2,8 +2,12 @@
 
 /** @var \Model\Entity\Product[] $productList */
 /** @var bool $isLogged */
+/** @var \Service\Order\Basket $basket */
+/** @var \Service\Discount\IDiscount $discount */
 /** @var \Closure $path */
-$body = function () use ($productList, $isLogged, $path) {
+
+
+$body = function () use ($productList, $isLogged, $discount, $basket, $path) {
     ?>
     <form method="post">
         <table cellpadding="10">
@@ -11,7 +15,6 @@ $body = function () use ($productList, $isLogged, $path) {
                 <td colspan="3" align="center">Корзина</td>
             </tr>
 <?php
-    $totalPrice = 0;
     $n = 1;
     foreach ($productList as $product) {
         ?>
@@ -22,12 +25,18 @@ $body = function () use ($productList, $isLogged, $path) {
                 <td><input type="button" value="Удалить" /></td>
             </tr>
 <?php
-        $totalPrice += $product->getPrice();
     } ?>
             <tr>
-                <td colspan="3" align="right">Итого: <?= $totalPrice ?> рублей</td>
+                <td colspan="3" align="right">Итого: <?= $basket->getTotalSumWithDiscount() ?> рублей</td>
             </tr>
-<?php if ($totalPrice > 0) {
+    <?php if ($discount->getDiscount()): ?>
+        <tr>
+            <td colspan="3" align="right">С учетом скидки в  <?= $discount->getDiscount() ?>% </td>
+        </tr>
+    <?php endif; ?>
+
+
+            <?php if ($basket->getTotalSumWithDiscount() > 0) {
         if ($isLogged) {
             ?>
             <tr>
