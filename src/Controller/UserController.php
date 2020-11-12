@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Controller;
 
 use Framework\Render;
+use Service\Order\Basket;
 use Service\User\User;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,8 +63,8 @@ class UserController
      */
     public function userList(Request $request): Response
     {
-        $user_session = new Security($request->getSession());
-        $user = $user_session->getUser();
+        $userSession = new Security($request->getSession());
+        $user = $userSession->getUser();
 
         if (is_null($user) or !$user->isSuperUser()){
             return  $this->render('error404.html.php');
@@ -71,5 +72,23 @@ class UserController
 
         $userList = (new User())->getAll();
         return  $this->render('user/list.html.php', ['userList' => $userList]);
+    }
+
+    /**
+     * Страница профиля авторизованного пользователя
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function userProfile(Request $request): Response
+    {
+        $userSession = new Security($request->getSession());
+        $user = $userSession->getUser();
+
+        if (is_null($user)){
+            return  $this->render('error404.html.php');
+        }
+        $basket = new Basket($request->getSession());
+        return  $this->render('user/profile.html.php', ['user' => $user, 'basket' => $basket]);
     }
 }
