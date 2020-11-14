@@ -34,8 +34,9 @@ class BirthdayDiscount implements IDiscount
      */
     public function getDiscount(): float
     {
-        if (is_null($this->user))
+        if (is_null($this->user)) {
             return 0;
+        }
 
         $discountValue = 5;
 
@@ -46,8 +47,9 @@ class BirthdayDiscount implements IDiscount
         $dateLeftRange = Date('m.d', strtotime("-".$daysBefore." days"));
         $dateRightRange = Date('m.d', strtotime("+".$daysAfter." days"));
 
-        if (($dateLeftRange <= $birthday) && ($birthday <= $dateRightRange))
+        if (($dateLeftRange <= $birthday) && ($birthday <= $dateRightRange)) {
             return $discountValue;
+        }
 
         return 0;
     }

@@ -31,7 +31,9 @@ class OrderController
         $discount = $basket->getBestDiscount();
         $isLogged = (new Security($request->getSession()))->isLogged();
 
-        return $this->render('order/info.html.php', [
+        return $this->render(
+            'order/info.html.php',
+            [
                 'productList' => $productList,
                 'basket' => $basket,
                 'isLogged' => $isLogged,
