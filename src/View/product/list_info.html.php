@@ -23,8 +23,7 @@ $body = function () use ($productList, $path) {
                 <th><?= $product->getDescription() ?></th>
             </tr>
             <?php
-        }
-        ?>
+        } ?>
 
     </table>
     <?php

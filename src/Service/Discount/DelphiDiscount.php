@@ -37,8 +37,8 @@ class DelphiDiscount implements IDiscount
         $discountValue = 8;
         $products = $this->basket->getProductsInfo();
 
-        foreach ($products as $product){
-            if ($product->getName() == 'Delphi'){
+        foreach ($products as $product) {
+            if ($product->getName() == 'Delphi') {
                 return $discountValue;
             }
         }

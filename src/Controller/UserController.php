@@ -66,7 +66,7 @@ class UserController
         $userSession = new Security($request->getSession());
         $user = $userSession->getUser();
 
-        if (is_null($user) or !$user->isSuperUser()){
+        if (is_null($user) or !$user->isSuperUser()) {
             return  $this->render('error404.html.php');
         }
 
@@ -85,7 +85,7 @@ class UserController
         $userSession = new Security($request->getSession());
         $user = $userSession->getUser();
 
-        if (is_null($user)){
+        if (is_null($user)) {
             return  $this->render('error404.html.php');
         }
         $basket = new Basket($request->getSession());

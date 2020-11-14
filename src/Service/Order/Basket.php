@@ -87,7 +87,7 @@ class Basket
     {
         $products = $this->getProductsInfo();
         $totalSum = 0;
-        foreach ($products as $product){
+        foreach ($products as $product) {
             $totalSum += $product->getPrice();
         }
         return $totalSum;
@@ -118,11 +118,11 @@ class Basket
         $maxDiscountValue = 0;
 
         $discounts = [DelphiDiscount::class, BirthdayDiscount::class, BigSumDiscount::class];
-        foreach ($discounts as $discount){
+        foreach ($discounts as $discount) {
             $currentDiscount = new $discount($user, $this);
             $currentDiscountValue = $currentDiscount->getDiscount();
 
-            if ($currentDiscountValue > $maxDiscountValue ){
+            if ($currentDiscountValue > $maxDiscountValue) {
                 $bestDiscount = $currentDiscount;
             }
         }

@@ -56,7 +56,10 @@ class User
             $user['login'],
             $user['birthday'],
             $user['password'],
-            new Entity\Role($role['id'], $role['title'], $role['role']
+            new Entity\Role(
+                $role['id'],
+                $role['title'],
+                $role['role']
             )
         );
     }

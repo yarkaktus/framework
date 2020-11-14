@@ -112,6 +112,5 @@ class User
             return true;
         }
         return false;
-
     }
 }

@@ -16,21 +16,21 @@
                             <table cellspacing="10">
                                 <tr><td><a href="<?= $path('index') ?>">Главная</a></td></tr>
                                 <?php if (!is_null($user) and $user->isSuperUser()) {
-                                    ?>
+    ?>
                                     <tr>
                                         <td><a href="<?= $path('user_list') ?>">Пользователи</a></td>
                                     </tr>
                                     <?php
-                                } ?>
+} ?>
 
                                 <tr><td><a href="<?= $path('product_list') ?>">Товары</a></td></tr>
                                 <tr><td><a href="<?= $path('product_list_info') ?>">Каталог</a></td></tr>
                                 <tr><td><a href="<?= $path('order_info') ?>">Корзина</a></td></tr>
                                 <?php if (!$isAuth) {
-    ?>
+        ?>
                                     <tr><td><a href="<?= $path('user_authentication') ?>">Авторизация</a></td></tr>
                                 <?php
-} else {
+    } else {
         ?>
                                     <tr><td><a href="<?= $path('user_profile') ?>">Мой профиль</a></td></tr>
                                     <tr><td><a href="<?= $path('logout') ?>">Выход</a></td></tr>

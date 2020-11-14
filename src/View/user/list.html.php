@@ -23,8 +23,7 @@ $body = function () use ($userList, $path) {
                 <th><?= $user->getRole()->getTitle() ?></th>
             </tr>
             <?php
-        }
-        ?>
+        } ?>
 
     </table>
     <?php

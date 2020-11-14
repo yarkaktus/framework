@@ -37,7 +37,7 @@ class BigSumDiscount implements IDiscount
         $orderSum = 40000;
         $discountValue = 10;
 
-        if ($this->basket->getTotalProductSum() > $orderSum){
+        if ($this->basket->getTotalProductSum() > $orderSum) {
             return $discountValue;
         }
         return 0;
