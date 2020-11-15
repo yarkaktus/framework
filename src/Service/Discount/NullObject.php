@@ -9,7 +9,7 @@ class NullObject implements IDiscount
     /**
      * @inheritdoc
      */
-    public function getDiscount(): float
+    public function getDiscountValue(): float
     {
         // Скидка отсутствует
         return 0;

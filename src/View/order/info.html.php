@@ -29,9 +29,9 @@ $body = function () use ($productList, $isLogged, $discount, $basket, $path) {
             <tr>
                 <td colspan="3" align="right">Итого: <?= $basket->getTotalSumWithDiscount() ?> рублей</td>
             </tr>
-    <?php if ($discount->getDiscount()): ?>
+    <?php if ($discount->getDiscountValue()): ?>
         <tr>
-            <td colspan="3" align="right">С учетом скидки в  <?= $discount->getDiscount() ?>% </td>
+            <td colspan="3" align="right">С учетом скидки в  <?= $discount->getDiscountValue() ?>% </td>
         </tr>
     <?php endif; ?>
 

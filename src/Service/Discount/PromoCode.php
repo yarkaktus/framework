@@ -22,7 +22,7 @@ class PromoCode implements IDiscount
     /**
      * @inheritdoc
      */
-    public function getDiscount(): float
+    public function getDiscountValue(): float
     {
         // Получаем по промокоду размер скидки на заказ в процентах
         // $discount = $this->find($this->promoCode)->discount();

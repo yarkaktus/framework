@@ -11,5 +11,5 @@ interface IDiscount
      *
      * @return float
      */
-    public function getDiscount(): float;
+    public function getDiscountValue(): float;
 }
