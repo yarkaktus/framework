@@ -22,7 +22,8 @@ class Product
 
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price'], $item['description']);
+            $product = new Entity\Product($item['id'], $item['name'], $item['price'], $item['description']);
+            $productList[] = clone $product;
         }
 
         return $productList;
@@ -37,7 +38,8 @@ class Product
     {
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
-            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price'], $item['description']);
+            $product = new Entity\Product($item['id'], $item['name'], $item['price'], $item['description']);
+            $productList[] = clone $product;
         }
 
         return $productList;

@@ -1,20 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Service\Order;
 
 use Model;
 use Service\Billing\Card;
-use Service\Billing\IBilling;
 use Service\Communication\Email;
-use Service\Communication\ICommunication;
-use Service\Discount\BirthdayDiscount;
 use Service\Discount\BigSumDiscount;
+use Service\Discount\BirthdayDiscount;
 use Service\Discount\DelphiDiscount;
 use Service\Discount\IDiscount;
 use Service\Discount\NullObject;
-use Service\User\ISecurity;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -96,9 +93,9 @@ class Basket
     public function getTotalSumWithDiscount(): float
     {
         $totalSum = $this->getTotalProductSum();
-        $discount = $this -> getBestDiscount();
+        $discount = $this->getBestDiscount();
 
-        $totalSum = $totalSum - $totalSum / 100 * $discount->getDiscount();
+        $totalSum = $totalSum - $totalSum / 100 * $discount->getDiscountValue();
 
         return $totalSum;
     }
@@ -120,7 +117,7 @@ class Basket
         $discounts = [DelphiDiscount::class, BirthdayDiscount::class, BigSumDiscount::class];
         foreach ($discounts as $discount) {
             $currentDiscount = new $discount($user, $this);
-            $currentDiscountValue = $currentDiscount->getDiscount();
+            $currentDiscountValue = $currentDiscount->getDiscountValue();
 
             if ($currentDiscountValue > $maxDiscountValue) {
                 $bestDiscount = $currentDiscount;
@@ -141,46 +138,26 @@ class Basket
         $billing = new Card();
 
         // Здесь должна быть некоторая логика получения информации о скидки пользователя
-        $discount = $this -> getBestDiscount();
+        $discount = $this->getBestDiscount();
 
         // Здесь должна быть некоторая логика получения способа уведомления пользователя о покупке
         $communication = new Email();
 
         $security = new Security($this->session);
 
-        $this->checkoutProcess($discount, $billing, $security, $communication);
-    }
+        $basketBuilder = new BasketBuilder();
+        $basketBuilder->setBilling($billing);
+        $basketBuilder->setCommunication($communication);
+        $basketBuilder->setDiscount($discount);
+        $basketBuilder->setSecurity($security);
+        $basketBuilder->setBasket($this);
 
-    /**
-     * Проведение всех этапов заказа
-     *
-     * @param IDiscount $discount,
-     * @param IBilling $billing,
-     * @param ISecurity $security,
-     * @param ICommunication $communication
-     * @return void
-     */
-    public function checkoutProcess(
-        IDiscount $discount,
-        IBilling $billing,
-        ISecurity $security,
-        ICommunication $communication
-    ): void {
-        $totalPrice = 0;
-        foreach ($this->getProductsInfo() as $product) {
-            $totalPrice += $product->getPrice();
-        }
+        $orderProcessor = new OrderProcessor();
+        $totalPrice = $orderProcessor->checkoutProcess($basketBuilder);
 
-        $discount = $discount->getDiscount();
-        $totalPrice = $totalPrice - $totalPrice / 100 * $discount;
-
-        $billing->pay($totalPrice);
         $this->session->set(static::PREVIOUS_BASKET_SUM_KEY, $totalPrice);
-
-
-        $user = $security->getUser();
-        $communication->process($user, 'checkout_template');
     }
+
 
     /**
      * Фабричный метод для репозитория Product

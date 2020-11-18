@@ -32,7 +32,7 @@ class BigSumDiscount implements IDiscount
     /**
      * @inheritdoc
      */
-    public function getDiscount(): float
+    public function getDiscountValue(): float
     {
         $orderSum = 40000;
         $discountValue = 10;

@@ -32,7 +32,7 @@ class DelphiDiscount implements IDiscount
     /**
      * @inheritdoc
      */
-    public function getDiscount(): float
+    public function getDiscountValue(): float
     {
         $discountValue = 8;
         $products = $this->basket->getProductsInfo();

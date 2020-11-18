@@ -32,7 +32,7 @@ class BirthdayDiscount implements IDiscount
     /**
      * @inheritdoc
      */
-    public function getDiscount(): float
+    public function getDiscountValue(): float
     {
         if (is_null($this->user)) {
             return 0;
