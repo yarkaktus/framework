@@ -106,6 +106,11 @@ class Basket
         return $previousSum;
     }
 
+    public function setPreviousTotalSum(float $totalSum): void
+    {
+        $this->session->set(static::PREVIOUS_BASKET_SUM_KEY, $totalSum);
+    }
+
     public function getBestDiscount(): IDiscount
     {
         $security = new Security($this->session);
@@ -126,38 +131,6 @@ class Basket
 
         return $bestDiscount;
     }
-
-    /**
-     * Оформление заказа
-     *
-     * @return void
-     */
-    public function checkout(): void
-    {
-        // Здесь должна быть некоторая логика выбора способа платежа
-        $billing = new Card();
-
-        // Здесь должна быть некоторая логика получения информации о скидки пользователя
-        $discount = $this->getBestDiscount();
-
-        // Здесь должна быть некоторая логика получения способа уведомления пользователя о покупке
-        $communication = new Email();
-
-        $security = new Security($this->session);
-
-        $basketBuilder = new BasketBuilder();
-        $basketBuilder->setBilling($billing);
-        $basketBuilder->setCommunication($communication);
-        $basketBuilder->setDiscount($discount);
-        $basketBuilder->setSecurity($security);
-        $basketBuilder->setBasket($this);
-
-        $orderProcessor = new OrderProcessor();
-        $totalPrice = $orderProcessor->checkoutProcess($basketBuilder);
-
-        $this->session->set(static::PREVIOUS_BASKET_SUM_KEY, $totalPrice);
-    }
-
 
     /**
      * Фабричный метод для репозитория Product
