@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Service\Order;
 
-interface IOrderProcessor
+interface IOrderFacade
 {
     public function checkoutProcess(IBasketBuilder $basketBuilder): float;
 }

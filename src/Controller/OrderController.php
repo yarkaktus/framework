@@ -6,6 +6,7 @@ namespace Controller;
 
 use Framework\Render;
 use Service\Order\Basket;
+use Service\Order\BasketFacade;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,12 +51,17 @@ class OrderController
      */
     public function checkoutAction(Request $request): Response
     {
-        $isLogged = (new Security($request->getSession()))->isLogged();
+        $session = $request->getSession();
+        $isLogged = (new Security($session))->isLogged();
         if (!$isLogged) {
             return $this->redirect('user_authentication');
         }
 
-        (new Basket($request->getSession()))->checkout();
+        $basket = new Basket($session);
+        $basketFacade = new BasketFacade($basket, $session);
+
+        $basketFacade->checkout();
+
 
         return $this->render('order/checkout.html.php');
     }
