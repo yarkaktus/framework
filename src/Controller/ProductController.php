@@ -51,14 +51,16 @@ class ProductController
      */
     public function listAction(Request $request): Response
     {
-        $productList = (new Product())->getAll($request->query->get('sort', ''));
+        $sortKey = $request->query->get('sort', '');
+        $productList = (new Product())->getAll($sortKey);
 
         return $this->render('product/list.html.php', ['productList' => $productList]);
     }
 
     public function listInfoAction(Request $request): Response
     {
-        $productList = (new Product())->getAll($request->query->get('sort', ''));
+        $sortKey = $request->query->get('sort', '');
+        $productList = (new Product())->getAll($sortKey);
 
         return $this->render('product/list_info.html.php', ['productList' => $productList]);
     }

@@ -1,10 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Service\Product;
 
 use Model;
+use Service\Product\Sorting\NameSortStrategy;
+use Service\Product\Sorting\NullSortStrategy;
+use Service\Product\Sorting\PriceSortStrategy;
 
 class Product
 {
@@ -30,10 +33,15 @@ class Product
     public function getAll(string $sortType): array
     {
         $productList = $this->getProductRepository()->fetchAll();
+        $sortStrategy = NullSortStrategy::class;
 
-        // Применить паттерн Стратегия
-        // $sortType === 'price'; // Сортировка по цене
-        // $sortType === 'name'; // Сортировка по имени
+        if ($sortType === 'price') {
+            $sortStrategy = PriceSortStrategy::class;
+        } elseif ($sortType === 'name') {
+            $sortStrategy = NameSortStrategy::class;
+        }
+
+        $productList = $sortStrategy::sort($productList);
 
         return $productList;
     }

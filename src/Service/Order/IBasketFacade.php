@@ -3,7 +3,6 @@
 
 namespace Service\Order;
 
-
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 interface IBasketFacade
