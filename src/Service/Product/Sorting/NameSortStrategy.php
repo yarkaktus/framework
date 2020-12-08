@@ -12,7 +12,7 @@ class NameSortStrategy implements ISortStrategy
         return strcmp($a->getName(), $b->getName());
     }
 
-    public static function sort(array $data): array
+    public function sort(array $data): array
     {
         usort($data, array(NameSortStrategy::class, "cmp"));
 

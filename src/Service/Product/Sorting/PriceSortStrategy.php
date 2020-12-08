@@ -12,7 +12,7 @@ class PriceSortStrategy implements ISortStrategy
         return ($a->getPrice() > $b->getPrice()) ? +1 : -1;
     }
 
-    public static function sort(array $data): array
+    public function sort(array $data): array
     {
         usort($data, array(PriceSortStrategy::class, "cmp"));
 

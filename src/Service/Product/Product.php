@@ -33,15 +33,16 @@ class Product
     public function getAll(string $sortType): array
     {
         $productList = $this->getProductRepository()->fetchAll();
-        $sortStrategy = NullSortStrategy::class;
+        $sortContext = new SortContext();
+        $sortContext->setStrategy(new NullSortStrategy());
 
         if ($sortType === 'price') {
-            $sortStrategy = PriceSortStrategy::class;
+            $sortContext->setStrategy(new PriceSortStrategy());
         } elseif ($sortType === 'name') {
-            $sortStrategy = NameSortStrategy::class;
+            $sortContext->setStrategy(new NameSortStrategy());
         }
 
-        $productList = $sortStrategy::sort($productList);
+        $productList = $sortContext->doSorting($productList);
 
         return $productList;
     }

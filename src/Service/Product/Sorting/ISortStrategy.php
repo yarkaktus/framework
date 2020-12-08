@@ -5,5 +5,5 @@ namespace Service\Product\Sorting;
 
 interface ISortStrategy
 {
-    public static function sort(array $data): array;
+    public function sort(array $data): array;
 }
