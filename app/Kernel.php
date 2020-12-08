@@ -2,20 +2,13 @@
 
 declare(strict_types = 1);
 
+use Framework\Commands\ProcessCommand;
 use Framework\Commands\RegisterConfigCommand;
 use Framework\Commands\RegisterRoutesCommand;
-use Framework\Commands\ProcessCommand;
 use Framework\Invoker\KernelInvoker;
-use Framework\Registry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
 class Kernel
