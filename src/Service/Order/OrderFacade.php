@@ -5,13 +5,13 @@ namespace Service\Order;
 
 class OrderFacade implements IOrderFacade
 {
-     /**
-     * //     * Проведение всех этапов заказа
-     * //     *
-     * //     * @param IBasketBuilder $basketBuilder
-     * //     * @return void
-     * //
-     */
+    /**
+    * //     * Проведение всех этапов заказа
+    * //     *
+    * //     * @param IBasketBuilder $basketBuilder
+    * //     * @return void
+    * //
+    */
     public function checkoutProcess(
         IBasketBuilder $basketBuilder
     ): float {
